@@ -1,11 +1,11 @@
 import "./icons.js";
-import { state } from "./state.js";
-import { initTheme } from "./theme.js";
-import { checkMe, renderUserArea, initAuth } from "./auth.js";
-import * as tree from "./tree.js";
-import { showEmpty } from "./doc.js";
-import { setupSearch } from "./search.js";
-import { api } from "./api.js";
+import { state } from "./state.js?v=20260826150348";
+import { initTheme } from "./theme.js?v=20260826150348";
+import { checkMe, renderUserArea, initAuth } from "./auth.js?v=20260826150348";
+import * as tree from "./tree.js?v=20260826150348";
+import { showEmpty } from "./doc.js?v=20260826150348";
+import { setupSearch } from "./search.js?v=20260826150348";
+import { api } from "./api.js?v=20260826150348";
 window.icon = window.icon;
 window.__tree = tree;
 async function init() {
@@ -24,7 +24,7 @@ async function init() {
   await checkMe();
   renderUserArea();
   tree.setupAddProject(async () => {
-    const { promptDialog, toast } = await import("./ui.js");
+    const { promptDialog, toast } = await import("./ui.js?v=20260826150348");
     const name = await promptDialog({ title: "新建项目", placeholder: "项目名称" });
     if (!name || !name.trim()) return;
     try {

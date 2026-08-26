@@ -1,6 +1,6 @@
-import { api } from "./api.js";
-import { escapeHtml } from "./ui.js";
-import { state } from "./state.js";
+import { api } from "./api.js?v=20260826150348";
+import { escapeHtml } from "./ui.js?v=20260826150348";
+import { state } from "./state.js?v=20260826150348";
 let timer = null;
 function setupSearch() {
   const input = document.getElementById("searchInput");
@@ -76,13 +76,13 @@ async function doSearch(q) {
       panel.classList.add("hidden");
       document.getElementById("searchInput").value = "";
       state.searchQuery = "";
-      const tree = await import("./tree.js");
+      const tree = await import("./tree.js?v=20260826150348");
       if (state.currentProjectId !== r.project_id) {
         state.currentProjectId = r.project_id;
       }
       await tree.selectProject(r.project_id, { keepFolder: false });
       await tree.openFolder(r.folder_id);
-      const doc = await import("./doc.js");
+      const doc = await import("./doc.js?v=20260826150348");
       await doc.openDoc(r.id);
     });
     panel.appendChild(item);

@@ -1,7 +1,7 @@
-import { state } from "./state.js";
-import { api } from "./api.js";
-import { escapeHtml, promptDialog, confirmDialog, toast, contextMenu } from "./ui.js";
-import { canEditFolder } from "./auth.js";
+import { state } from "./state.js?v=20260826150348";
+import { api } from "./api.js?v=20260826150348";
+import { escapeHtml, promptDialog, confirmDialog, toast, contextMenu } from "./ui.js?v=20260826150348";
+import { canEditFolder } from "./auth.js?v=20260826150348";
 const canManage = () => state.user && state.user.role === "admin";
 async function loadProjects() {
   try {
@@ -127,7 +127,7 @@ async function selectProject(pid, { keepFolder = false } = {}) {
   if (state.currentFolderId) {
     await openFolder(state.currentFolderId, { silent: true });
   } else {
-    const { showEmpty } = await import("./doc.js");
+    const { showEmpty } = await import("./doc.js?v=20260826150348");
     showEmpty();
   }
 }
@@ -251,7 +251,7 @@ async function loadFolderDocuments(fid) {
   }
   state.currentFolderId = fid;
   renderTree();
-  const { showEmpty } = await import("./doc.js");
+  const { showEmpty } = await import("./doc.js?v=20260826150348");
   showEmpty();
 }
 async function openFolder(fid, { silent = false } = {}) {
@@ -291,7 +291,7 @@ async function deleteFolder(f) {
     state.openFolderIds.delete(f.id);
     state.folders = await api(`/api/projects/${state.currentProjectId}/folders`);
     renderTree();
-    const { showEmpty } = await import("./doc.js");
+    const { showEmpty } = await import("./doc.js?v=20260826150348");
     showEmpty();
     toast("文件夹已删除", "success");
   } catch (e) {
@@ -305,7 +305,7 @@ function showFolderPlusMenu(f, x, y) {
       state.currentFolderId = f.id;
       state.openFolderIds.add(f.id);
       renderTree();
-      const { createDoc } = await import("./doc.js");
+      const { createDoc } = await import("./doc.js?v=20260826150348");
       await createDoc(f);
     } });
   }
@@ -313,7 +313,7 @@ function showFolderPlusMenu(f, x, y) {
     items.push({ label: "新建子文件夹", icon: "plus", onClick: () => addSubFolder(f) });
   }
   items.push({ label: "上传文件", icon: "upload", onClick: async () => {
-    const { uploadFileModal } = await import("./doc.js");
+    const { uploadFileModal } = await import("./doc.js?v=20260826150348");
     uploadFileModal();
   } });
   contextMenu(items, x, y);
@@ -325,7 +325,7 @@ function showFolderMenu(f, x, y) {
       state.currentFolderId = f.id;
       state.openFolderIds.add(f.id);
       renderTree();
-      const { createDoc } = await import("./doc.js");
+      const { createDoc } = await import("./doc.js?v=20260826150348");
       await createDoc(f);
     } });
   }
@@ -333,7 +333,7 @@ function showFolderMenu(f, x, y) {
     items.push({ label: "新建子文件夹", icon: "plus", onClick: () => addSubFolder(f) });
   }
   items.push({ label: "上传文件", icon: "upload", onClick: async () => {
-    const { uploadFileModal } = await import("./doc.js");
+    const { uploadFileModal } = await import("./doc.js?v=20260826150348");
     uploadFileModal();
   } });
   if (canManage()) {
@@ -344,16 +344,16 @@ function showFolderMenu(f, x, y) {
 function showDocMenu(d, x, y) {
   const items = [
     { label: "下载 (.md)", icon: "download", onClick: async () => {
-      const { downloadDoc } = await import("./doc.js");
+      const { downloadDoc } = await import("./doc.js?v=20260826150348");
       await downloadDoc(d.id);
     } },
     { label: "编辑", icon: "edit", onClick: async () => {
       state.currentDocId = d.id;
-      const { openDoc } = await import("./doc.js");
+      const { openDoc } = await import("./doc.js?v=20260826150348");
       await openDoc(d.id);
     } },
     { label: "上传文件", icon: "upload", onClick: async () => {
-      const { uploadFileModal } = await import("./doc.js");
+      const { uploadFileModal } = await import("./doc.js?v=20260826150348");
       uploadFileModal();
     } }
   ];
@@ -392,13 +392,13 @@ function setupAddRootFolder(handler) {
       items.push({ label: "新建文档", icon: "file", onClick: async () => {
         const f = state.folders.find((x) => x.id === state.currentFolderId);
         if (f) {
-          const { createDoc } = await import("./doc.js");
+          const { createDoc } = await import("./doc.js?v=20260826150348");
           await createDoc(f);
         }
       } });
     }
     items.push({ label: "上传文件", icon: "upload", onClick: async () => {
-      const { uploadFileModal } = await import("./doc.js");
+      const { uploadFileModal } = await import("./doc.js?v=20260826150348");
       uploadFileModal();
     } });
     contextMenu(items, rect.left, rect.bottom + 4);
