@@ -1,7 +1,7 @@
-import { state } from "./state.js?v=20260826150348";
-import { api } from "./api.js?v=20260826150348";
-import { escapeHtml, promptDialog, confirmDialog, toast } from "./ui.js?v=20260826150348";
-import { canEditFolder } from "./auth.js?v=20260826150348";
+import { state } from "./state.js?v=20260826150536";
+import { api } from "./api.js?v=20260826150536";
+import { escapeHtml, promptDialog, confirmDialog, toast } from "./ui.js?v=20260826150536";
+import { canEditFolder } from "./auth.js?v=20260826150536";
 let saveTimer = null;
 let lastSavedContent = "";
 function showEmpty() {
@@ -23,7 +23,7 @@ async function openDoc(id) {
   state.currentDocId = id;
   state.currentDoc = doc;
   state.currentFolderId = doc.folder_id;
-  const { renderTree } = await import("./tree.js?v=20260826150348");
+  const { renderTree } = await import("./tree.js?v=20260826150536");
   renderTree();
   renderDoc();
 }
@@ -256,7 +256,7 @@ async function saveNow({ titleEl, contentEl, priceEl, repoEl, linkEl, saveState 
     saveState.textContent = "已保存 " + (/* @__PURE__ */ new Date()).toLocaleTimeString();
     state.currentDoc.title = title;
     state.currentDoc.content = contentEl.value;
-    const { renderTree } = await import("./tree.js?v=20260826150348");
+    const { renderTree } = await import("./tree.js?v=20260826150536");
     renderTree();
   } catch (e) {
     saveState.textContent = "保存失败";
@@ -270,7 +270,7 @@ async function deleteDoc() {
     await api(`/api/documents/${state.currentDoc.id}`, { method: "DELETE" });
     state.currentDoc = null;
     state.currentDocId = null;
-    const { openFolder } = await import("./tree.js?v=20260826150348");
+    const { openFolder } = await import("./tree.js?v=20260826150536");
     await openFolder(state.currentFolderId);
     toast("文档已删除", "success");
   } catch (e) {
@@ -285,7 +285,7 @@ async function createDoc(folder) {
   try {
     const r = await api(`/api/folders/${folder.id}/documents`, { method: "POST", body: { title: title.trim() } });
     toast("文档已创建，开始编辑", "success");
-    const { loadFolderDocuments } = await import("./tree.js?v=20260826150348");
+    const { loadFolderDocuments } = await import("./tree.js?v=20260826150536");
     await loadFolderDocuments(folder.id);
     await openDoc(r.id);
     editDoc();

@@ -1,6 +1,6 @@
-import { state } from "./state.js?v=20260826150348";
-import { api, setToken, getToken, setOnUnauthorized } from "./api.js?v=20260826150348";
-import { escapeHtml, toast, promptDialog, confirmDialog } from "./ui.js?v=20260826150348";
+import { state } from "./state.js?v=20260826150536";
+import { api, setToken, getToken, setOnUnauthorized } from "./api.js?v=20260826150536";
+import { escapeHtml, toast, promptDialog, confirmDialog } from "./ui.js?v=20260826150536";
 const isAdmin = () => state.user && state.user.role === "admin";
 async function checkMe() {
   if (!getToken()) {
@@ -67,7 +67,7 @@ async function logout() {
   state.user = null;
   state.myFolders = { all: false, folder_ids: [] };
   renderUserArea();
-  const { showEmpty } = await import("./doc.js?v=20260826150348");
+  const { showEmpty } = await import("./doc.js?v=20260826150536");
   showEmpty();
   toast("已退出登录", "success");
 }
@@ -140,7 +140,7 @@ function showLoginModal() {
       root.innerHTML = "";
       renderUserArea();
       toast(`欢迎，${r.user.display_name || r.user.username}`, "success");
-      const tree = await import("./tree.js?v=20260826150348");
+      const tree = await import("./tree.js?v=20260826150536");
       await tree.loadProjects();
     } catch (e) {
       errEl.textContent = e.message;
