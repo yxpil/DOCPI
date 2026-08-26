@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DocPI · 开发文档公示</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="vendor/tailwind.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a' }
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="h-screen w-screen overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 antialiased">
+
+  <!-- 顶栏 -->
+  <header class="h-14 flex items-center gap-3 px-4 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 select-none">
+    <div class="flex items-center gap-2.5">
+      <span id="logoIcon" class="text-brand-600 dark:text-brand-400"></span>
+      <span id="siteName" class="font-semibold text-base tracking-tight">DocPI</span>
+    </div>
+
+    <div class="flex-1 max-w-xl mx-auto relative">
+      <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 pointer-events-none" id="searchIcon"></span>
+      <input id="searchInput" type="text" placeholder="搜索文档 / 文件夹 / 项目 / 仓库地址…"
+        class="w-full h-9 pl-9 pr-3 rounded-lg text-sm bg-slate-100 dark:bg-slate-800 border border-transparent focus:border-brand-500 focus:bg-white dark:focus:bg-slate-900 outline-none transition" />
+      <div id="searchPanel" class="hidden absolute top-full mt-1 left-0 right-0 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 max-h-96 overflow-y-auto z-50"></div>
+    </div>
+
+    <div class="flex items-center gap-1.5">
+      <!-- 设置按钮（区别于主题按钮） -->
+      <button id="btnSettings" title="设置" class="hidden h-9 px-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"></button>
+      <!-- 主题切换 -->
+      <button id="btnTheme" title="切换主题" class="h-9 w-9 flex items-center justify-center rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+        <span id="themeIcon"></span>
+      </button>
+      <div id="userArea" class="flex items-center gap-2"></div>
+    </div>
+  </header>
+
+  <div class="flex" style="height: calc(100vh - 3.5rem);">
+    <!-- 左侧栏：单项目视图 -->
+    <aside class="w-80 min-w-[300px] border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col">
+      <div class="p-3 border-b border-slate-100 dark:border-slate-800 space-y-2">
+        <div class="flex items-center gap-2">
+          <select id="projectSelect" class="flex-1 h-9 rounded-lg text-sm bg-slate-100 dark:bg-slate-800 border border-transparent focus:border-brand-500 outline-none px-2 cursor-pointer">
+            <option value="">选择项目…</option>
+          </select>
+          <button id="btnAddProject" class="hidden h-9 w-9 shrink-0 items-center justify-center rounded-lg text-brand-600 hover:bg-brand-50 dark:hover:bg-brand-900/30 transition" title="新建项目"></button>
+        </div>
+      </div>
+      <div class="px-3 py-2 flex items-center justify-between">
+        <span class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">文件夹</span>
+        <button id="btnAddRootFolder" class="hidden h-6 px-2 rounded-md text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-brand-600 hover:bg-brand-50 dark:hover:bg-brand-900/30 transition">+ 新建</button>
+      </div>
+      <div id="tree" class="flex-1 overflow-y-auto py-1 scroll-thin"></div>
+    </aside>
+
+    <!-- 右侧内容 -->
+    <main class="flex-1 overflow-y-auto scroll-thin bg-slate-50 dark:bg-slate-950">
+      <div id="contentArea" class="p-6"></div>
+    </main>
+  </div>
+
+  <!-- 弹窗容器 -->
+  <div id="modalRoot"></div>
+
+  <!-- Toast -->
+  <div id="toastRoot" class="fixed bottom-5 right-5 z-[100] flex flex-col gap-2"></div>
+
+  <script src="vendor/marked.min.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
