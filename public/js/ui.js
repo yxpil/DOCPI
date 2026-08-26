@@ -23,7 +23,7 @@ function confirmDialog({ title, message, confirmText = "确定", danger = false 
   return new Promise((resolve) => {
     const root = document.getElementById("modalRoot");
     const wrapper = document.createElement("div");
-    wrapper.className = "fixed inset-0 z-[90] flex items-center justify-center bg-black/40 backdrop-blur-sm";
+    wrapper.className = "fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm";
     wrapper.innerHTML = `
       <div class="w-[360px] max-w-[90vw] rounded-3xl bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 shadow-2xl p-5">
         <h3 class="text-base font-semibold mb-2">${escapeHtml(title)}</h3>
@@ -48,7 +48,7 @@ function promptDialog({ title, placeholder = "", defaultValue = "", valueLabel =
   return new Promise((resolve) => {
     const root = document.getElementById("modalRoot");
     const wrapper = document.createElement("div");
-    wrapper.className = "fixed inset-0 z-[90] flex items-center justify-center bg-black/40 backdrop-blur-sm";
+    wrapper.className = "fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm";
     wrapper.innerHTML = `
       <div class="w-[400px] max-w-[90vw] rounded-3xl bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 shadow-2xl p-5">
         <h3 class="text-base font-semibold mb-3">${escapeHtml(title)}</h3>
