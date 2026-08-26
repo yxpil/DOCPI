@@ -42,7 +42,7 @@ fn seed(db: &Connection) {
         "# 快速开始", "", "欢迎使用本系统。", "",
         "## 环境要求", "", "- Rust 工具链（rustc/cargo）", "- 现代浏览器", "",
         "## 安装步骤", "", "```bash", "cd server", "cargo build --release", "cargo run", "```", "",
-        "> 提示：默认端口 3000，可用环境变量 PORT 覆盖。", "",
+        "> 提示：默认端口 4322，可用环境变量 PORT 覆盖。", "",
         "| 模块 | 说明 |", "| ---- | ---- |", "| 后端 | Rust + axum + SQLite |", "| 前端 | TypeScript + esbuild |",
     ]
     .join("\n");

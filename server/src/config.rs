@@ -32,7 +32,7 @@ pub fn port() -> u16 {
     env::var("PORT")
         .ok()
         .and_then(|p| p.parse().ok())
-        .unwrap_or(3000)
+        .unwrap_or(4322)
 }
 
 /// 初始管理员账号（默认 admin/admin，可用环境变量覆盖）

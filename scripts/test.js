@@ -1,6 +1,6 @@
 // 集成测试：覆盖鉴权、验证码、API Token、嵌套文件夹、文档字段、作者追踪、上传、设置、用户资料
 // 用法：先启动服务（DOCPI_DISABLE_CAPTCHA=1 node server.js），再 node scripts/test.js
-const BASE = process.env.BASE || 'http://localhost:3000';
+const BASE = process.env.BASE || 'http://localhost:4322';
 
 let pass = 0, fail = 0;
 const ok = (name, cond) => { console.log((cond ? '  PASS ' : '  FAIL ') + name); cond ? pass++ : fail++; };

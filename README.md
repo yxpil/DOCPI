@@ -62,7 +62,7 @@ cargo build --release   # 或 cargo run（debug）
 cargo run
 ```
 
-浏览器打开 **http://localhost:3000** 即可使用。
+浏览器打开 **http://localhost:4322** 即可使用。
 
 > 依赖说明：`rusqlite` 的 `bundled` 特性会编译 SQLite C 源码，需要 C 编译器。
 > Windows 上若使用 MSVC 工具链需安装 Visual Studio Build Tools；若已装 MinGW 可直接用 GNU 工具链：
@@ -97,7 +97,7 @@ cargo run --bin seed
 
 | 变量 | 默认值 | 说明 |
 | ---- | ---- | ---- |
-| `PORT` | `3000` | 服务端口 |
+| `PORT` | `4322` | 服务端口 |
 | `ADMIN_USERNAME` | `admin` | 初始管理员用户名 |
 | `ADMIN_PASSWORD` | `admin` | 初始管理员密码（**生产环境务必修改**） |
 | `DOCPI_DATA_DIR` | `./data` | SQLite 数据目录 |
