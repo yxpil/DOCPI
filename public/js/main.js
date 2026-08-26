@@ -23,9 +23,6 @@ async function init() {
   document.getElementById("searchIcon").innerHTML = window.icon("search");
   await checkMe();
   renderUserArea();
-  document.getElementById("projectSelect").addEventListener("change", (e) => {
-    tree.selectProject(e.target.value ? Number(e.target.value) : null, { keepFolder: false });
-  });
   tree.setupAddProject(async () => {
     const { promptDialog, toast } = await import("./ui.js");
     const name = await promptDialog({ title: "新建项目", placeholder: "项目名称" });

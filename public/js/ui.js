@@ -7,11 +7,11 @@ function toast(message, type = "info") {
   const root = document.getElementById("toastRoot");
   const el = document.createElement("div");
   const palette = {
-    info: "bg-slate-800 text-white dark:bg-slate-700",
+    info: "bg-neutral-900 text-white dark:bg-neutral-100 dark:text-black",
     success: "bg-emerald-600 text-white",
     error: "bg-red-600 text-white"
   };
-  el.className = `px-4 py-2.5 rounded-lg shadow-lg text-sm font-medium ${palette[type] || palette.info} animate-[toastIn_.2s_ease]`;
+  el.className = `px-4 py-2.5 rounded-full shadow-lg text-sm font-medium ${palette[type] || palette.info} animate-[toastIn_.2s_ease]`;
   el.textContent = message;
   root.appendChild(el);
   setTimeout(() => {
@@ -25,12 +25,12 @@ function confirmDialog({ title, message, confirmText = "确定", danger = false 
     const wrapper = document.createElement("div");
     wrapper.className = "fixed inset-0 z-[90] flex items-center justify-center bg-black/40 backdrop-blur-sm";
     wrapper.innerHTML = `
-      <div class="w-[360px] max-w-[90vw] rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-2xl p-5">
+      <div class="w-[360px] max-w-[90vw] rounded-3xl bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 shadow-2xl p-5">
         <h3 class="text-base font-semibold mb-2">${escapeHtml(title)}</h3>
-        <p class="text-sm text-slate-500 dark:text-slate-400 mb-5">${escapeHtml(message)}</p>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-5">${escapeHtml(message)}</p>
         <div class="flex justify-end gap-2">
-          <button data-act="cancel" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">取消</button>
-          <button data-act="ok" class="px-4 py-2 rounded-lg text-sm font-medium text-white ${danger ? "bg-red-600 hover:bg-red-700" : "bg-brand-600 hover:bg-brand-700"} transition">${escapeHtml(confirmText)}</button>
+          <button data-act="cancel" class="px-4 py-2 rounded-full text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition">取消</button>
+          <button data-act="ok" class="px-4 py-2 rounded-full text-sm font-medium text-white ${danger ? "bg-red-600 hover:bg-red-700" : "bg-brand-600 hover:bg-brand-700"} transition">${escapeHtml(confirmText)}</button>
         </div>
       </div>`;
     root.appendChild(wrapper);
@@ -50,12 +50,12 @@ function promptDialog({ title, placeholder = "", defaultValue = "", valueLabel =
     const wrapper = document.createElement("div");
     wrapper.className = "fixed inset-0 z-[90] flex items-center justify-center bg-black/40 backdrop-blur-sm";
     wrapper.innerHTML = `
-      <div class="w-[400px] max-w-[90vw] rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-2xl p-5">
+      <div class="w-[400px] max-w-[90vw] rounded-3xl bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 shadow-2xl p-5">
         <h3 class="text-base font-semibold mb-3">${escapeHtml(title)}</h3>
-        ${multiline ? `<textarea data-input rows="4" placeholder="${escapeHtml(placeholder)}" class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 text-sm outline-none focus:border-brand-500">${escapeHtml(defaultValue)}</textarea>` : `<input data-input type="text" placeholder="${escapeHtml(placeholder)}" value="${escapeHtml(defaultValue)}" class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 text-sm outline-none focus:border-brand-500" />`}
+        ${multiline ? `<textarea data-input rows="4" placeholder="${escapeHtml(placeholder)}" class="w-full rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-black px-3 py-2 text-sm outline-none focus:border-brand-500">${escapeHtml(defaultValue)}</textarea>` : `<input data-input type="text" placeholder="${escapeHtml(placeholder)}" value="${escapeHtml(defaultValue)}" class="w-full rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-black px-3 py-2 text-sm outline-none focus:border-brand-500" />`}
         <div class="flex justify-end gap-2 mt-4">
-          <button data-act="cancel" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">取消</button>
-          <button data-act="ok" class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-brand-600 hover:bg-brand-700 transition">确定</button>
+          <button data-act="cancel" class="px-4 py-2 rounded-full text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition">取消</button>
+          <button data-act="ok" class="px-4 py-2 rounded-full text-sm font-medium text-white bg-brand-600 hover:bg-brand-700 transition">确定</button>
         </div>
       </div>`;
     root.appendChild(wrapper);
@@ -79,8 +79,42 @@ function promptDialog({ title, placeholder = "", defaultValue = "", valueLabel =
     });
   });
 }
+function contextMenu(items, x, y) {
+  const old = document.getElementById("ctxMenu");
+  if (old) old.remove();
+  const menu = document.createElement("div");
+  menu.id = "ctxMenu";
+  menu.className = "fixed z-[110] min-w-[176px] rounded-2xl bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 shadow-2xl py-1 select-none";
+  menu.innerHTML = items.map((it) => `
+    <button data-ctx class="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-left hover:bg-neutral-100 dark:hover:bg-neutral-900 transition ${it.danger ? "text-red-600 dark:text-red-400" : "text-neutral-700 dark:text-neutral-200"}">
+      <span class="shrink-0 opacity-70">${it.icon ? window.icon(it.icon) : ""}</span>
+      <span>${escapeHtml(it.label)}</span>
+    </button>`).join("");
+  document.body.appendChild(menu);
+  const r = menu.getBoundingClientRect();
+  menu.style.left = Math.min(x, window.innerWidth - r.width - 8) + "px";
+  menu.style.top = Math.min(y, window.innerHeight - r.height - 8) + "px";
+  const btns = [...menu.querySelectorAll("[data-ctx]")];
+  btns.forEach((btn, i) => btn.addEventListener("click", () => {
+    menu.remove();
+    if (items[i] && items[i].onClick) items[i].onClick();
+  }));
+  const close = () => menu.remove();
+  setTimeout(() => {
+    document.addEventListener("click", close, { once: true });
+    document.addEventListener("contextmenu", close, { once: true });
+    document.addEventListener("keydown", function esc(e) {
+      if (e.key === "Escape") {
+        menu.remove();
+        document.removeEventListener("keydown", esc);
+      }
+    });
+    window.addEventListener("blur", close, { once: true });
+  }, 0);
+}
 export {
   confirmDialog,
+  contextMenu,
   escapeHtml,
   promptDialog,
   toast

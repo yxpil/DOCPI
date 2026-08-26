@@ -45,7 +45,7 @@ async function doSearch(q) {
     return;
   }
   if (!results.length) {
-    panel.innerHTML = `<div class="p-5 text-center text-sm text-slate-400 dark:text-slate-500">无匹配结果</div>`;
+    panel.innerHTML = `<div class="p-5 text-center text-sm text-neutral-400 dark:text-neutral-500">无匹配结果</div>`;
     panel.classList.remove("hidden");
     return;
   }
@@ -64,14 +64,14 @@ async function doSearch(q) {
       snippet = r.link;
     }
     const item = document.createElement("div");
-    item.className = "px-4 py-3 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 border-b border-slate-100 dark:border-slate-800 last:border-0";
+    item.className = "px-4 py-3 cursor-pointer hover:bg-white dark:hover:bg-neutral-800 border-b border-neutral-100 dark:border-neutral-800 last:border-0";
     item.innerHTML = `
       <div class="flex items-center gap-2">
-        <span class="text-slate-400 shrink-0">${window.icon("file")}</span>
+        <span class="text-neutral-400 shrink-0">${window.icon("file")}</span>
         <span class="text-sm font-medium truncate">${highlight(r.title, q)}</span>
       </div>
-      <div class="text-xs text-slate-400 dark:text-slate-500 mt-1 pl-6">${escapeHtml(r.project_name)} / ${escapeHtml(r.folder_name)}${r.author_name ? " · " + escapeHtml(r.author_name) : ""}</div>
-      ${snippet ? `<div class="text-xs text-slate-500 dark:text-slate-400 mt-1 pl-6 line-clamp-2">${highlight(snippet, q)}</div>` : ""}
+      <div class="text-xs text-neutral-400 dark:text-neutral-500 mt-1 pl-6">${escapeHtml(r.project_name)} / ${escapeHtml(r.folder_name)}${r.author_name ? " · " + escapeHtml(r.author_name) : ""}</div>
+      ${snippet ? `<div class="text-xs text-neutral-500 dark:text-neutral-400 mt-1 pl-6 line-clamp-2">${highlight(snippet, q)}</div>` : ""}
     `;
     item.addEventListener("click", async () => {
       panel.classList.add("hidden");

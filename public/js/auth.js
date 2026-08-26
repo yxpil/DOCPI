@@ -45,16 +45,16 @@ function renderUserArea() {
   settingsBtn.classList.remove("hidden");
   settingsBtn.innerHTML = window.icon("gear");
   settingsBtn.onclick = () => isAdmin() ? showAdminPanel() : showProfileModal();
-  const avatar = state.user.avatar ? `<img src="${escapeHtml(state.user.avatar)}" class="h-7 w-7 rounded-full object-cover ring-2 ring-slate-200 dark:ring-slate-700" />` : `<span class="h-7 w-7 rounded-full bg-brand-100 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300 flex items-center justify-center">${window.icon("user")}</span>`;
+  const avatar = state.user.avatar ? `<img src="${escapeHtml(state.user.avatar)}" class="h-7 w-7 rounded-full object-cover ring-2 ring-neutral-200 dark:ring-neutral-700" />` : `<span class="h-7 w-7 rounded-full bg-brand-100 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300 flex items-center justify-center">${window.icon("user")}</span>`;
   area.innerHTML = `
-    <div id="btnProfile" class="flex items-center gap-2 pl-2 cursor-pointer rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition px-2 py-1">
+    <div id="btnProfile" class="flex items-center gap-2 pl-2 cursor-pointer rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition px-2 py-1">
       ${avatar}
       <div class="leading-tight">
         <div class="text-sm font-medium">${escapeHtml(state.user.display_name || state.user.username)}</div>
-        <div class="text-[11px] text-slate-400 dark:text-slate-500">${isAdmin() ? "管理员" : "工程师"}</div>
+        <div class="text-[11px] text-neutral-400 dark:text-neutral-500">${isAdmin() ? "管理员" : "工程师"}</div>
       </div>
     </div>
-    <button id="btnLogout" title="退出登录" class="h-9 w-9 flex items-center justify-center rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">${window.icon("logout")}</button>`;
+    <button id="btnLogout" title="退出登录" class="h-9 w-9 flex items-center justify-center rounded-lg text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition">${window.icon("logout")}</button>`;
   document.getElementById("btnProfile").addEventListener("click", () => showProfileModal());
   document.getElementById("btnLogout").addEventListener("click", logout);
 }
@@ -75,19 +75,19 @@ function showLoginModal() {
   const root = document.getElementById("modalRoot");
   root.innerHTML = `
     <div class="fixed inset-0 z-[90] flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div class="w-[360px] max-w-[90vw] rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-2xl p-6">
+      <div class="w-[360px] max-w-[90vw] rounded-2xl bg-white dark:bg-black border border-neutral-200 dark:border-neutral-700 shadow-2xl p-6">
         <div class="flex items-center justify-between mb-5">
           <h3 class="text-lg font-semibold">登录</h3>
-          <button data-close class="h-7 w-7 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">${window.icon("close")}</button>
+          <button data-close class="h-7 w-7 flex items-center justify-center rounded-lg text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800">${window.icon("close")}</button>
         </div>
-        <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">用户名</label>
-        <input id="loginUser" type="text" class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500" placeholder="用户名" />
-        <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">密码</label>
-        <input id="loginPass" type="password" class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500" placeholder="密码" />
-        <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">验证码</label>
+        <label class="block text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-1">用户名</label>
+        <input id="loginUser" type="text" class="w-full rounded-lg border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500" placeholder="用户名" />
+        <label class="block text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-1">密码</label>
+        <input id="loginPass" type="password" class="w-full rounded-lg border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500" placeholder="密码" />
+        <label class="block text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-1">验证码</label>
         <div class="flex items-center gap-2 mb-4">
-          <input id="loginCaptcha" type="text" class="flex-1 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 text-sm outline-none focus:border-brand-500" placeholder="输入验证码" maxlength="6" />
-          <img id="captchaImg" alt="验证码" title="点击刷新" class="h-10 w-28 rounded-lg border border-slate-200 dark:border-slate-700 cursor-pointer object-cover" />
+          <input id="loginCaptcha" type="text" class="flex-1 rounded-lg border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-brand-500" placeholder="输入验证码" maxlength="6" />
+          <img id="captchaImg" alt="验证码" title="点击刷新" class="h-10 w-28 rounded-lg border border-neutral-200 dark:border-neutral-700 cursor-pointer object-cover" />
         </div>
         <div id="loginErr" class="hidden text-xs text-red-600 mb-3"></div>
         <button id="btnSubmitLogin" class="w-full h-10 rounded-lg text-sm font-medium text-white bg-brand-600 hover:bg-brand-700 transition">登录</button>
@@ -159,43 +159,43 @@ async function showProfileModal() {
   const root = document.getElementById("modalRoot");
   root.innerHTML = `
     <div class="fixed inset-0 z-[90] flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div class="w-[520px] max-w-[92vw] max-h-[88vh] flex flex-col rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-2xl">
-        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-slate-800">
+      <div class="w-[520px] max-w-[92vw] max-h-[88vh] flex flex-col rounded-2xl bg-white dark:bg-black border border-neutral-200 dark:border-neutral-700 shadow-2xl">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-neutral-100 dark:border-neutral-800">
           <h3 class="text-lg font-semibold flex items-center gap-2">${window.icon("user")} 个人资料</h3>
-          <button data-close class="h-7 w-7 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">${window.icon("close")}</button>
+          <button data-close class="h-7 w-7 flex items-center justify-center rounded-lg text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800">${window.icon("close")}</button>
         </div>
         <div class="flex-1 overflow-y-auto p-6 space-y-4">
           <div class="flex items-center gap-4">
             <div id="avatarWrap" class="shrink-0 cursor-pointer group relative">
-              ${state.user.avatar ? `<img src="${escapeHtml(state.user.avatar)}" class="h-20 w-20 rounded-full object-cover ring-2 ring-slate-200 dark:ring-slate-700" />` : `<span class="h-20 w-20 rounded-full bg-brand-100 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300 flex items-center justify-center">${window.icon("user").replace("w-4 h-4", "w-9 h-9")}</span>`}
+              ${state.user.avatar ? `<img src="${escapeHtml(state.user.avatar)}" class="h-20 w-20 rounded-full object-cover ring-2 ring-neutral-200 dark:ring-neutral-700" />` : `<span class="h-20 w-20 rounded-full bg-brand-100 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300 flex items-center justify-center">${window.icon("user").replace("w-4 h-4", "w-9 h-9")}</span>`}
               <div class="absolute inset-0 rounded-full bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-xs font-medium transition">更换头像</div>
             </div>
             <div>
               <div class="font-semibold">${escapeHtml(state.user.display_name || state.user.username)}</div>
-              <div class="text-sm text-slate-500 dark:text-slate-400">@${escapeHtml(state.user.username)} · ${isAdmin() ? "管理员" : "工程师"}</div>
+              <div class="text-sm text-neutral-500 dark:text-neutral-400">@${escapeHtml(state.user.username)} · ${isAdmin() ? "管理员" : "工程师"}</div>
               <input id="avatarFile" type="file" accept="image/*" class="hidden" />
             </div>
           </div>
 
           <div class="grid grid-cols-2 gap-3">
-            <div><label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">显示名</label>
-              <input id="pfName" value="${escapeHtml(state.user.display_name || "")}" class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 text-sm outline-none focus:border-brand-500" /></div>
-            <div><label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">邮箱</label>
-              <input id="pfEmail" value="${escapeHtml(state.user.email || "")}" class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 text-sm outline-none focus:border-brand-500" /></div>
-            <div><label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">电话</label>
-              <input id="pfPhone" value="${escapeHtml(state.user.phone || "")}" class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 text-sm outline-none focus:border-brand-500" /></div>
-            <div><label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">QQ</label>
-              <input id="pfQq" value="${escapeHtml(state.user.qq || "")}" class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 text-sm outline-none focus:border-brand-500" /></div>
+            <div><label class="block text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-1">显示名</label>
+              <input id="pfName" value="${escapeHtml(state.user.display_name || "")}" class="w-full rounded-lg border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-brand-500" /></div>
+            <div><label class="block text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-1">邮箱</label>
+              <input id="pfEmail" value="${escapeHtml(state.user.email || "")}" class="w-full rounded-lg border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-brand-500" /></div>
+            <div><label class="block text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-1">电话</label>
+              <input id="pfPhone" value="${escapeHtml(state.user.phone || "")}" class="w-full rounded-lg border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-brand-500" /></div>
+            <div><label class="block text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-1">QQ</label>
+              <input id="pfQq" value="${escapeHtml(state.user.qq || "")}" class="w-full rounded-lg border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-brand-500" /></div>
           </div>
 
           <div>
-            <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">修改密码（留空不改）</label>
-            <input id="pfPass" type="password" class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 text-sm outline-none focus:border-brand-500" />
+            <label class="block text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-1">修改密码（留空不改）</label>
+            <input id="pfPass" type="password" class="w-full rounded-lg border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-brand-500" />
           </div>
         </div>
-        <div class="px-6 py-4 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-2">
-          <button id="btnTokenManage" class="h-9 px-4 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-1.5">${window.icon("key")} API Token</button>
-          <button data-close class="h-9 px-4 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">取消</button>
+        <div class="px-6 py-4 border-t border-neutral-100 dark:border-neutral-800 flex justify-end gap-2">
+          <button id="btnTokenManage" class="h-9 px-4 rounded-lg text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 flex items-center gap-1.5">${window.icon("key")} API Token</button>
+          <button data-close class="h-9 px-4 rounded-lg text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">取消</button>
           <button id="btnSaveProfile" class="h-9 px-4 rounded-lg text-sm font-medium text-white bg-brand-600 hover:bg-brand-700">保存</button>
         </div>
       </div>
@@ -215,7 +215,7 @@ async function showProfileModal() {
       const u = await api("/api/auth/me/avatar", { method: "PUT", body: { avatar: dataUrl } });
       state.user = u;
       renderUserArea();
-      root.querySelector("#avatarWrap").innerHTML = `<img src="${escapeHtml(dataUrl)}" class="h-20 w-20 rounded-full object-cover ring-2 ring-slate-200 dark:ring-slate-700" />`;
+      root.querySelector("#avatarWrap").innerHTML = `<img src="${escapeHtml(dataUrl)}" class="h-20 w-20 rounded-full object-cover ring-2 ring-neutral-200 dark:ring-neutral-700" />`;
       toast("头像已更新", "success");
     } catch (e) {
       toast(e.message, "error");
@@ -266,16 +266,16 @@ async function showTokenModal() {
   const root = document.getElementById("modalRoot");
   root.innerHTML = `
     <div class="fixed inset-0 z-[95] flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div class="w-[620px] max-w-[92vw] max-h-[85vh] flex flex-col rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-2xl">
-        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-slate-800">
+      <div class="w-[620px] max-w-[92vw] max-h-[85vh] flex flex-col rounded-2xl bg-white dark:bg-black border border-neutral-200 dark:border-neutral-700 shadow-2xl">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-neutral-100 dark:border-neutral-800">
           <h3 class="text-lg font-semibold flex items-center gap-2">${window.icon("key")} API Token</h3>
-          <button data-close class="h-7 w-7 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">${window.icon("close")}</button>
+          <button data-close class="h-7 w-7 flex items-center justify-center rounded-lg text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800">${window.icon("close")}</button>
         </div>
         <div class="flex-1 overflow-y-auto p-5">
-          <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">API Token 用于 AI / 脚本以 <code class="px-1 py-0.5 bg-slate-100 dark:bg-slate-800 rounded">?token=TOKEN</code> 或 <code class="px-1 py-0.5 bg-slate-100 dark:bg-slate-800 rounded">Authorization: Bearer TOKEN</code> 方式调用接口读写文档。</p>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 mb-3">API Token 用于 AI / 脚本以 <code class="px-1 py-0.5 bg-neutral-100 dark:bg-neutral-900 rounded">?token=TOKEN</code> 或 <code class="px-1 py-0.5 bg-neutral-100 dark:bg-neutral-900 rounded">Authorization: Bearer TOKEN</code> 方式调用接口读写文档。</p>
           <div id="tokenList" class="space-y-2"></div>
         </div>
-        <div class="px-6 py-4 border-t border-slate-100 dark:border-slate-800">
+        <div class="px-6 py-4 border-t border-neutral-100 dark:border-neutral-800">
           <button id="btnNewToken" class="w-full h-10 rounded-lg text-sm font-medium text-white bg-brand-600 hover:bg-brand-700 transition">新建 Token</button>
         </div>
       </div>
@@ -289,12 +289,12 @@ async function showTokenModal() {
       const r = await api("/api/auth/api-tokens", { method: "POST", body: { name: name.trim() } });
       root.innerHTML = `
         <div class="fixed inset-0 z-[95] flex items-center justify-center bg-black/40 backdrop-blur-sm">
-          <div class="w-[480px] max-w-[90vw] rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-2xl p-6">
+          <div class="w-[480px] max-w-[90vw] rounded-2xl bg-white dark:bg-black border border-neutral-200 dark:border-neutral-700 shadow-2xl p-6">
             <h3 class="text-lg font-semibold flex items-center gap-2">${window.icon("key")} Token 已生成</h3>
             <p class="text-xs text-amber-600 dark:text-amber-400 mt-2 mb-3">请立即复制保存，此 Token 仅显示一次！</p>
-            <textarea readonly class="w-full h-20 rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 px-3 py-2 text-xs font-mono outline-none">${r.token}</textarea>
+            <textarea readonly class="w-full h-20 rounded-lg border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 px-3 py-2 text-xs font-mono outline-none">${r.token}</textarea>
             <div class="flex justify-end gap-2 mt-4">
-              <button id="btnCopyToken" class="h-9 px-4 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">复制</button>
+              <button id="btnCopyToken" class="h-9 px-4 rounded-lg text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">复制</button>
               <button id="btnDoneToken" class="h-9 px-4 rounded-lg text-sm font-medium text-white bg-brand-600 hover:bg-brand-700">完成</button>
             </div>
           </div>
@@ -314,19 +314,19 @@ async function showTokenModal() {
 function renderTokenList(root, tokens) {
   const list = root.querySelector("#tokenList");
   if (!tokens.length) {
-    list.innerHTML = `<p class="text-sm text-slate-400 dark:text-slate-500 text-center py-6">暂无 Token</p>`;
+    list.innerHTML = `<p class="text-sm text-neutral-400 dark:text-neutral-500 text-center py-6">暂无 Token</p>`;
     return;
   }
   list.innerHTML = "";
   for (const t of tokens) {
     const row = document.createElement("div");
-    row.className = "flex items-center gap-3 py-2.5 border-b border-slate-100 dark:border-slate-800 last:border-0";
+    row.className = "flex items-center gap-3 py-2.5 border-b border-neutral-100 dark:border-neutral-800 last:border-0";
     row.innerHTML = `
       <div class="flex-1 min-w-0">
         <div class="text-sm font-medium">${escapeHtml(t.name)}</div>
-        <div class="text-xs text-slate-400 dark:text-slate-500">${escapeHtml(t.username || "")} · 创建于 ${escapeHtml(t.created_at || "")}</div>
+        <div class="text-xs text-neutral-400 dark:text-neutral-500">${escapeHtml(t.username || "")} · 创建于 ${escapeHtml(t.created_at || "")}</div>
       </div>
-      <button data-del="${t.id}" class="h-7 w-7 flex items-center justify-center rounded-md text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">${window.icon("trash")}</button>`;
+      <button data-del="${t.id}" class="h-7 w-7 flex items-center justify-center rounded-md text-neutral-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">${window.icon("trash")}</button>`;
     list.appendChild(row);
     row.querySelector(`[data-del="${t.id}"]`).addEventListener("click", async () => {
       const ok = await confirmDialog({ title: "删除 Token", message: "确定删除该 API Token？使用它的 AI/脚本将立即失效。", danger: true });
@@ -345,15 +345,15 @@ async function showAdminPanel() {
   const root = document.getElementById("modalRoot");
   root.innerHTML = `
     <div class="fixed inset-0 z-[90] flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div class="w-[860px] max-w-[94vw] h-[88vh] flex flex-col rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-2xl overflow-hidden">
-        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-slate-800">
+      <div class="w-[860px] max-w-[94vw] h-[88vh] flex flex-col rounded-2xl bg-white dark:bg-black border border-neutral-200 dark:border-neutral-700 shadow-2xl overflow-hidden">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-neutral-100 dark:border-neutral-800">
           <h3 class="text-lg font-semibold flex items-center gap-2">${window.icon("gear")} 管理员后台</h3>
-          <button data-close class="h-7 w-7 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">${window.icon("close")}</button>
+          <button data-close class="h-7 w-7 flex items-center justify-center rounded-lg text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800">${window.icon("close")}</button>
         </div>
         <div class="flex flex-1 overflow-hidden">
-          <nav class="w-44 border-r border-slate-100 dark:border-slate-800 py-3 space-y-1">
+          <nav class="w-44 border-r border-neutral-100 dark:border-neutral-800 py-3 space-y-1">
             <button data-tab="site" class="admin-tab w-full text-left px-4 py-2.5 text-sm font-medium flex items-center gap-2 text-brand-600 bg-brand-50 dark:bg-brand-900/30">${window.icon("gear")} 站点设置</button>
-            <button data-tab="users" class="admin-tab w-full text-left px-4 py-2.5 text-sm font-medium flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">${window.icon("shield")} 用户管理</button>
+            <button data-tab="users" class="admin-tab w-full text-left px-4 py-2.5 text-sm font-medium flex items-center gap-2 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">${window.icon("shield")} 用户管理</button>
           </nav>
           <div class="flex-1 overflow-y-auto p-6" id="adminBody"></div>
         </div>
@@ -362,7 +362,7 @@ async function showAdminPanel() {
   root.querySelector("[data-close]").addEventListener("click", () => root.innerHTML = "");
   const tabs = root.querySelectorAll(".admin-tab");
   tabs.forEach((t) => t.addEventListener("click", async () => {
-    tabs.forEach((x) => x.className = "admin-tab w-full text-left px-4 py-2.5 text-sm font-medium flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800");
+    tabs.forEach((x) => x.className = "admin-tab w-full text-left px-4 py-2.5 text-sm font-medium flex items-center gap-2 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800");
     t.className = "admin-tab w-full text-left px-4 py-2.5 text-sm font-medium flex items-center gap-2 text-brand-600 bg-brand-50 dark:bg-brand-900/30";
     if (t.dataset.tab === "site") await renderSettingsTab(root);
     else await renderUsersTab(root);
@@ -374,10 +374,10 @@ async function renderSettingsTab(root) {
   body.innerHTML = `
     <h4 class="font-semibold mb-4">站点设置</h4>
     <div class="space-y-4 max-w-md">
-      <div><label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">站点名称</label>
-        <input id="setName" value="${escapeHtml(state.settings.site_name || "")}" class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 text-sm outline-none focus:border-brand-500" /></div>
-      <div><label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">站点描述</label>
-        <input id="setDesc" value="${escapeHtml(state.settings.site_desc || "")}" class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 text-sm outline-none focus:border-brand-500" /></div>
+      <div><label class="block text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-1">站点名称</label>
+        <input id="setName" value="${escapeHtml(state.settings.site_name || "")}" class="w-full rounded-lg border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-brand-500" /></div>
+      <div><label class="block text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-1">站点描述</label>
+        <input id="setDesc" value="${escapeHtml(state.settings.site_desc || "")}" class="w-full rounded-lg border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-brand-500" /></div>
       <button id="btnSaveSettings" class="h-9 px-4 rounded-lg text-sm font-medium text-white bg-brand-600 hover:bg-brand-700">保存设置</button>
     </div>`;
   body.querySelector("#btnSaveSettings").addEventListener("click", async () => {
@@ -413,20 +413,20 @@ async function renderUsersTab(root) {
   for (const u of users) {
     const admin = u.role === "admin";
     const row = document.createElement("div");
-    row.className = "flex items-center gap-3 py-2.5 border-b border-slate-100 dark:border-slate-800 last:border-0";
+    row.className = "flex items-center gap-3 py-2.5 border-b border-neutral-100 dark:border-neutral-800 last:border-0";
     row.innerHTML = `
       <span class="h-9 w-9 rounded-full ${admin ? "bg-amber-100 text-amber-700" : "bg-brand-100 text-brand-700 dark:bg-brand-900/40 dark:text-brand-300"} flex items-center justify-center shrink-0">${u.avatar ? `<img src="${escapeHtml(u.avatar)}" class="h-9 w-9 rounded-full object-cover"/>` : window.icon("user")}</span>
       <div class="flex-1 min-w-0">
         <div class="flex items-center gap-2">
           <span class="text-sm font-medium">${escapeHtml(u.display_name || u.username)}</span>
-          <span class="text-[11px] px-1.5 py-0.5 rounded ${admin ? "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300" : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400"}">${admin ? "管理员" : "工程师"}</span>
+          <span class="text-[11px] px-1.5 py-0.5 rounded ${admin ? "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300" : "bg-neutral-100 text-neutral-600 dark:bg-neutral-900 dark:text-neutral-400"}">${admin ? "管理员" : "工程师"}</span>
         </div>
-        <div class="text-xs text-slate-400 dark:text-slate-500">@${escapeHtml(u.username)}${u.email ? " · " + escapeHtml(u.email) : ""}${u.phone ? " · " + escapeHtml(u.phone) : ""}</div>
+        <div class="text-xs text-neutral-400 dark:text-neutral-500">@${escapeHtml(u.username)}${u.email ? " · " + escapeHtml(u.email) : ""}${u.phone ? " · " + escapeHtml(u.phone) : ""}</div>
       </div>
       <div class="flex gap-1 shrink-0">
-        ${!admin ? `<button data-grant="${u.id}" class="h-7 px-2.5 rounded-md text-xs font-medium text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700">授权文件夹</button>` : ""}
-        <button data-edit="${u.id}" class="h-7 w-7 flex items-center justify-center rounded-md text-slate-400 hover:text-brand-600 hover:bg-brand-50 dark:hover:bg-brand-900/30">${window.icon("edit")}</button>
-        <button data-del="${u.id}" class="${u.protected ? "hidden" : ""} h-7 w-7 flex items-center justify-center rounded-md text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">${window.icon("trash")}</button>
+        ${!admin ? `<button data-grant="${u.id}" class="h-7 px-2.5 rounded-md text-xs font-medium text-neutral-600 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-700 hover:bg-white dark:hover:bg-neutral-700">授权文件夹</button>` : ""}
+        <button data-edit="${u.id}" class="h-7 w-7 flex items-center justify-center rounded-md text-neutral-400 hover:text-brand-600 hover:bg-brand-50 dark:hover:bg-brand-900/30">${window.icon("edit")}</button>
+        <button data-del="${u.id}" class="${u.protected ? "hidden" : ""} h-7 w-7 flex items-center justify-center rounded-md text-neutral-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">${window.icon("trash")}</button>
       </div>`;
     list.appendChild(row);
     row.querySelector(`[data-grant="${u.id}"]`)?.addEventListener("click", () => showGrantModal(u));
@@ -459,14 +459,14 @@ async function showGrantModal(u) {
   const root = document.getElementById("modalRoot");
   root.innerHTML = `
     <div class="fixed inset-0 z-[95] flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div class="w-[520px] max-w-[92vw] max-h-[80vh] flex flex-col rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-2xl">
-        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-slate-800">
+      <div class="w-[520px] max-w-[92vw] max-h-[80vh] flex flex-col rounded-2xl bg-white dark:bg-black border border-neutral-200 dark:border-neutral-700 shadow-2xl">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-neutral-100 dark:border-neutral-800">
           <h3 class="font-semibold">授权文件夹 · ${escapeHtml(u.username)}</h3>
-          <button data-close class="h-7 w-7 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">${window.icon("close")}</button>
+          <button data-close class="h-7 w-7 flex items-center justify-center rounded-lg text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800">${window.icon("close")}</button>
         </div>
         <div class="flex-1 overflow-y-auto p-5" id="grantBody"></div>
-        <div class="px-6 py-4 border-t border-slate-100 dark:border-slate-800 flex gap-2 justify-end">
-          <button data-cancel class="h-9 px-4 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">取消</button>
+        <div class="px-6 py-4 border-t border-neutral-100 dark:border-neutral-800 flex gap-2 justify-end">
+          <button data-cancel class="h-9 px-4 rounded-lg text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">取消</button>
           <button id="btnSaveGrant" class="h-9 px-4 rounded-lg text-sm font-medium text-white bg-brand-600 hover:bg-brand-700">保存</button>
         </div>
       </div>
@@ -486,9 +486,9 @@ async function showGrantModal(u) {
       buildTree(folders, f.id, depth + 1);
     }
   }
-  if (!projects.length) body.innerHTML = '<p class="text-sm text-slate-400 text-center py-6">暂无项目</p>';
+  if (!projects.length) body.innerHTML = '<p class="text-sm text-neutral-400 text-center py-6">暂无项目</p>';
   for (const p of projects) {
-    body.innerHTML += `<div class="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2 mb-1">${escapeHtml(p.name)}</div>`;
+    body.innerHTML += `<div class="text-xs font-semibold text-neutral-500 dark:text-neutral-400 mt-2 mb-1">${escapeHtml(p.name)}</div>`;
     buildTree(p.folders, null, 0);
   }
   root.querySelector("[data-close]").addEventListener("click", () => renderUsersTabByRoot());
@@ -510,20 +510,20 @@ async function showGrantModal(u) {
 function userForm(root) {
   root.innerHTML = `
     <div class="fixed inset-0 z-[95] flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div class="w-[400px] max-w-[90vw] rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-2xl p-6">
+      <div class="w-[400px] max-w-[90vw] rounded-2xl bg-white dark:bg-black border border-neutral-200 dark:border-neutral-700 shadow-2xl p-6">
         <h3 class="text-lg font-semibold mb-4">新建用户</h3>
-        <input id="fuUser" type="text" placeholder="用户名" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-slate-800 dark:border-slate-600" />
-        <input id="fuName" type="text" placeholder="显示名（可选）" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-slate-800 dark:border-slate-600" />
-        <input id="fuPass" type="password" placeholder="密码" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-slate-800 dark:border-slate-600" />
-        <input id="fuEmail" type="text" placeholder="邮箱（可选）" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-slate-800 dark:border-slate-600" />
-        <input id="fuPhone" type="text" placeholder="电话（可选）" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-slate-800 dark:border-slate-600" />
-        <input id="fuQq" type="text" placeholder="QQ（可选）" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-slate-800 dark:border-slate-600" />
-        <select id="fuRole" class="w-full rounded-lg border px-3 py-2 text-sm mb-4 outline-none focus:border-brand-500 dark:bg-slate-800 dark:border-slate-600">
+        <input id="fuUser" type="text" placeholder="用户名" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-neutral-900 dark:border-neutral-600" />
+        <input id="fuName" type="text" placeholder="显示名（可选）" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-neutral-900 dark:border-neutral-600" />
+        <input id="fuPass" type="password" placeholder="密码" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-neutral-900 dark:border-neutral-600" />
+        <input id="fuEmail" type="text" placeholder="邮箱（可选）" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-neutral-900 dark:border-neutral-600" />
+        <input id="fuPhone" type="text" placeholder="电话（可选）" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-neutral-900 dark:border-neutral-600" />
+        <input id="fuQq" type="text" placeholder="QQ（可选）" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-neutral-900 dark:border-neutral-600" />
+        <select id="fuRole" class="w-full rounded-lg border px-3 py-2 text-sm mb-4 outline-none focus:border-brand-500 dark:bg-neutral-900 dark:border-neutral-600">
           <option value="engineer">工程师</option><option value="admin">管理员</option>
         </select>
         <div id="fuErr" class="hidden text-xs text-red-600 mb-3"></div>
         <div class="flex gap-2 justify-end">
-          <button data-cancel class="h-9 px-4 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">取消</button>
+          <button data-cancel class="h-9 px-4 rounded-lg text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">取消</button>
           <button id="btnCreateUser" class="h-9 px-4 rounded-lg text-sm font-medium text-white bg-brand-600 hover:bg-brand-700">创建</button>
         </div>
       </div>
@@ -559,20 +559,20 @@ function userForm(root) {
 function userEditForm(root, u) {
   root.innerHTML = `
     <div class="fixed inset-0 z-[95] flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div class="w-[400px] max-w-[90vw] rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-2xl p-6">
+      <div class="w-[400px] max-w-[90vw] rounded-2xl bg-white dark:bg-black border border-neutral-200 dark:border-neutral-700 shadow-2xl p-6">
         <h3 class="text-lg font-semibold mb-4">编辑用户 · ${escapeHtml(u.username)}</h3>
-        <input id="euName" type="text" value="${escapeHtml(u.display_name || "")}" placeholder="显示名" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-slate-800 dark:border-slate-600" />
-        <input id="euEmail" type="text" value="${escapeHtml(u.email || "")}" placeholder="邮箱" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-slate-800 dark:border-slate-600" />
-        <input id="euPhone" type="text" value="${escapeHtml(u.phone || "")}" placeholder="电话" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-slate-800 dark:border-slate-600" />
-        <input id="euQq" type="text" value="${escapeHtml(u.qq || "")}" placeholder="QQ" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-slate-800 dark:border-slate-600" />
-        <input id="euPass" type="password" placeholder="新密码（留空不改）" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-slate-800 dark:border-slate-600" />
-        <select id="euRole" class="w-full rounded-lg border px-3 py-2 text-sm mb-4 outline-none focus:border-brand-500 dark:bg-slate-800 dark:border-slate-600">
+        <input id="euName" type="text" value="${escapeHtml(u.display_name || "")}" placeholder="显示名" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-neutral-900 dark:border-neutral-600" />
+        <input id="euEmail" type="text" value="${escapeHtml(u.email || "")}" placeholder="邮箱" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-neutral-900 dark:border-neutral-600" />
+        <input id="euPhone" type="text" value="${escapeHtml(u.phone || "")}" placeholder="电话" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-neutral-900 dark:border-neutral-600" />
+        <input id="euQq" type="text" value="${escapeHtml(u.qq || "")}" placeholder="QQ" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-neutral-900 dark:border-neutral-600" />
+        <input id="euPass" type="password" placeholder="新密码（留空不改）" class="w-full rounded-lg border px-3 py-2 text-sm mb-3 outline-none focus:border-brand-500 dark:bg-neutral-900 dark:border-neutral-600" />
+        <select id="euRole" class="w-full rounded-lg border px-3 py-2 text-sm mb-4 outline-none focus:border-brand-500 dark:bg-neutral-900 dark:border-neutral-600">
           <option value="engineer" ${u.role === "engineer" ? "selected" : ""}>工程师</option>
           <option value="admin" ${u.role === "admin" ? "selected" : ""}>管理员</option>
         </select>
         <div id="euErr" class="hidden text-xs text-red-600 mb-3"></div>
         <div class="flex gap-2 justify-end">
-          <button data-cancel class="h-9 px-4 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">取消</button>
+          <button data-cancel class="h-9 px-4 rounded-lg text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">取消</button>
           <button id="btnSaveUser" class="h-9 px-4 rounded-lg text-sm font-medium text-white bg-brand-600 hover:bg-brand-700">保存</button>
         </div>
       </div>
