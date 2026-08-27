@@ -2,7 +2,9 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
   <title>DocPI · 开发文档公示</title>
   <link rel="stylesheet" href="css/style.css" />
   <script src="vendor/tailwind.js"></script>
@@ -22,10 +24,14 @@
 <body class="h-screen w-screen overflow-hidden bg-white text-neutral-900 dark:bg-black dark:text-neutral-100 antialiased">
 
   <!-- 顶栏 -->
-  <header class="h-14 flex items-center gap-3 px-4 border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-black select-none">
-    <div class="flex items-center gap-2.5">
-      <span id="logoIcon" class="text-brand-600 dark:text-brand-400"></span>
-      <span id="siteName" class="font-semibold text-base tracking-tight">DocPI</span>
+  <header class="h-14 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-black select-none">
+    <!-- 移动端菜单按钮 -->
+    <button id="btnMenu" title="菜单" class="md:hidden h-9 w-9 flex items-center justify-center rounded-full text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition shrink-0">
+      <span id="menuIcon"></span>
+    </button>
+    <div class="flex items-center gap-2.5 min-w-0">
+      <span id="logoIcon" class="text-brand-600 dark:text-brand-400 shrink-0"></span>
+      <span id="siteName" class="font-semibold text-base tracking-tight truncate">DocPI</span>
     </div>
 
     <div class="flex-1 max-w-xl mx-auto relative">
@@ -35,7 +41,7 @@
       <div id="searchPanel" class="hidden absolute top-full mt-2 left-0 right-0 rounded-2xl shadow-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-black max-h-96 overflow-y-auto z-50"></div>
     </div>
 
-    <div class="flex items-center gap-1.5">
+    <div class="flex items-center gap-1.5 shrink-0">
       <!-- 设置按钮（区别于主题按钮） -->
       <button id="btnSettings" title="设置" class="hidden h-9 px-2.5 rounded-full text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition"></button>
       <!-- 主题切换 -->
@@ -46,16 +52,27 @@
     </div>
   </header>
 
-  <div class="flex" style="height: calc(100vh - 3.5rem);">
+  <div class="flex relative" style="height: calc(100vh - 3.5rem);">
+    <!-- 侧边遮罩（移动端） -->
+    <div id="drawerOverlay" class="md:hidden fixed inset-0 top-14 bg-black/40 backdrop-blur-[2px] z-30 opacity-0 pointer-events-none transition-opacity duration-200"></div>
+
     <!-- 左侧栏 -->
-    <aside class="w-80 min-w-[300px] border-r border-neutral-200 dark:border-neutral-800 bg-white dark:bg-black flex flex-col">
-      <!-- 项目管理（独立区块） -->
-      <div class="p-3 border-b border-neutral-100 dark:border-neutral-800">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">项目管理</span>
+    <aside id="sidebar" class="w-80 min-w-[300px] border-r border-neutral-200 dark:border-neutral-800 bg-white dark:bg-black flex flex-col shrink-0 z-40">
+      <!-- 项目管理（可折叠区块） -->
+      <div class="border-b border-neutral-100 dark:border-neutral-800">
+        <div class="flex items-center justify-between px-3 pt-3 pb-1.5">
+          <button id="btnToggleProjects" class="flex items-center gap-1 text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider hover:text-neutral-700 dark:hover:text-neutral-200 transition">
+            <span id="projectsChevron" class="tree-chevron text-neutral-400 inline-flex items-center justify-center w-3.5 h-3.5"></span>
+            <span>项目管理</span>
+          </button>
           <button id="btnAddProject" class="hidden h-6 px-2.5 rounded-full text-xs font-medium text-brand-600 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition" title="新建项目"></button>
         </div>
-        <div id="projectList" class="space-y-1"></div>
+        <div id="projectListWrap" class="overflow-y-auto scroll-thin px-2 pb-2" style="max-height: 38vh;">
+          <div id="projectList" class="space-y-1">
+            <div class="sk sk-line" style="width:70%;margin:6px 0;"></div>
+            <div class="sk sk-line" style="width:60%;margin:6px 0;"></div>
+          </div>
+        </div>
       </div>
 
       <!-- 文件夹 -->
@@ -63,12 +80,35 @@
         <span class="text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">文件夹</span>
         <button id="btnAddRootFolder" class="hidden h-6 px-2.5 rounded-full text-xs font-medium text-neutral-500 dark:text-neutral-400 hover:text-brand-600 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition">+ 新建</button>
       </div>
-      <div id="tree" class="flex-1 overflow-y-auto py-1 scroll-thin"></div>
+      <div id="tree" class="flex-1 overflow-y-auto py-1 scroll-thin">
+        <div class="px-2 space-y-2">
+          <div class="sk sk-line" style="width:80%;"></div>
+          <div class="sk sk-line" style="width:65%;"></div>
+          <div class="sk sk-line" style="width:72%;"></div>
+        </div>
+      </div>
     </aside>
 
     <!-- 右侧内容 -->
-    <main class="flex-1 overflow-y-auto scroll-thin bg-white dark:bg-black">
-      <div id="contentArea" class="p-6"></div>
+    <main class="flex-1 overflow-y-auto scroll-thin bg-white dark:bg-black min-w-0">
+      <div id="contentArea" class="p-4 sm:p-6">
+        <!-- 首屏骨架占位（由 main.js 加载完成后替换） -->
+        <div id="bootSkeleton" class="max-w-4xl mx-auto fade-in">
+          <div class="sk sk-line" style="width:55%;height:22px;margin-bottom:14px;"></div>
+          <div class="flex gap-2 mb-5">
+            <div class="sk sk-line" style="width:84px;height:20px;"></div>
+            <div class="sk sk-line" style="width:96px;height:20px;"></div>
+            <div class="sk sk-line" style="width:120px;height:20px;"></div>
+          </div>
+          <div class="sk sk-block" style="width:100%;margin-bottom:10px;"></div>
+          <div class="sk sk-block" style="width:92%;margin-bottom:10px;"></div>
+          <div class="sk sk-block" style="width:97%;margin-bottom:10px;"></div>
+          <div class="sk sk-block" style="width:78%;margin-bottom:18px;"></div>
+          <div class="sk sk-block" style="width:100%;height:90px;margin-bottom:14px;border-radius:14px;"></div>
+          <div class="sk sk-block" style="width:88%;margin-bottom:10px;"></div>
+          <div class="sk sk-block" style="width:60%;"></div>
+        </div>
+      </div>
     </main>
   </div>
 
@@ -80,6 +120,6 @@
 
   <script src="vendor/marked.min.js"></script>
   <script src="vendor/mermaid.min.js"></script>
-  <script type="module" src="js/main.js?v=20260826150348"></script>
+  <script type="module" src="js/main.js?v=20260827074532"></script>
 </body>
 </html>

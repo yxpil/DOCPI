@@ -50,7 +50,7 @@ function renderUserArea() {
   area.innerHTML = `
     <div id="btnProfile" class="flex items-center gap-2 pl-2 cursor-pointer rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition px-2 py-1">
       ${avatar}
-      <div class="leading-tight">
+      <div class="leading-tight hidden sm:block">
         <div class="text-sm font-medium">${escapeHtml(state.user.display_name || state.user.username)}</div>
         <div class="text-[11px] text-neutral-400 dark:text-neutral-500">${isAdmin() ? "管理员" : "工程师"}</div>
       </div>

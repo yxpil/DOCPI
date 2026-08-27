@@ -1,6 +1,6 @@
-import { state } from "./state.js?v=20260826150536";
-import { api, setToken, getToken, setOnUnauthorized } from "./api.js?v=20260826150536";
-import { escapeHtml, toast, promptDialog, confirmDialog } from "./ui.js?v=20260826150536";
+import { state } from "./state.js?v=20260827075536";
+import { api, setToken, getToken, setOnUnauthorized } from "./api.js?v=20260827075536";
+import { escapeHtml, toast, promptDialog, confirmDialog } from "./ui.js?v=20260827075536";
 const isAdmin = () => state.user && state.user.role === "admin";
 async function checkMe() {
   if (!getToken()) {
@@ -49,7 +49,7 @@ function renderUserArea() {
   area.innerHTML = `
     <div id="btnProfile" class="flex items-center gap-2 pl-2 cursor-pointer rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition px-2 py-1">
       ${avatar}
-      <div class="leading-tight">
+      <div class="leading-tight hidden sm:block">
         <div class="text-sm font-medium">${escapeHtml(state.user.display_name || state.user.username)}</div>
         <div class="text-[11px] text-neutral-400 dark:text-neutral-500">${isAdmin() ? "管理员" : "工程师"}</div>
       </div>
@@ -67,7 +67,7 @@ async function logout() {
   state.user = null;
   state.myFolders = { all: false, folder_ids: [] };
   renderUserArea();
-  const { showEmpty } = await import("./doc.js?v=20260826150536");
+  const { showEmpty } = await import("./doc.js?v=20260827075536");
   showEmpty();
   toast("已退出登录", "success");
 }
@@ -140,7 +140,7 @@ function showLoginModal() {
       root.innerHTML = "";
       renderUserArea();
       toast(`欢迎，${r.user.display_name || r.user.username}`, "success");
-      const tree = await import("./tree.js?v=20260826150536");
+      const tree = await import("./tree.js?v=20260827075536");
       await tree.loadProjects();
     } catch (e) {
       errEl.textContent = e.message;

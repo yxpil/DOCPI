@@ -1,4 +1,3 @@
-// @ts-nocheck
 import "./icons.js";
 import { state } from "./state.js";
 import { initTheme } from "./theme.js";
@@ -9,9 +8,54 @@ import { setupSearch } from "./search.js";
 import { api } from "./api.js";
 window.icon = window.icon;
 window.__tree = tree;
+
+// ===== 移动端侧边栏抽屉 =====
+function openMobileDrawer() {
+  const sb = document.getElementById("sidebar");
+  const ov = document.getElementById("drawerOverlay");
+  if (sb) sb.classList.add("drawer-open");
+  if (ov) ov.classList.add("show");
+}
+function closeMobileDrawer() {
+  const sb = document.getElementById("sidebar");
+  const ov = document.getElementById("drawerOverlay");
+  if (sb) sb.classList.remove("drawer-open");
+  if (ov) ov.classList.remove("show");
+}
+window.__openMobileDrawer = openMobileDrawer;
+window.__closeMobileDrawer = closeMobileDrawer;
+
+function setupMobileDrawer() {
+  document.getElementById("menuIcon").innerHTML = window.icon("menu");
+  document.getElementById("btnMenu").addEventListener("click", () => {
+    const sb = document.getElementById("sidebar");
+    if (sb.classList.contains("drawer-open")) closeMobileDrawer();
+    else openMobileDrawer();
+  });
+  document.getElementById("drawerOverlay").addEventListener("click", closeMobileDrawer);
+}
+
+// ===== 项目管理折叠（持久化） =====
+const PROJECTS_COLLAPSE_KEY = "docpi_projects_collapsed";
+function setupProjectToggle() {
+  const chev = document.getElementById("projectsChevron");
+  const wrap = document.getElementById("projectListWrap");
+  chev.innerHTML = window.icon("chevron");
+  const collapsed = localStorage.getItem(PROJECTS_COLLAPSE_KEY) === "1";
+  chev.classList.toggle("open", !collapsed);
+  wrap.classList.toggle("collapsed", collapsed);
+  document.getElementById("btnToggleProjects").addEventListener("click", () => {
+    const next = wrap.classList.toggle("collapsed");
+    chev.classList.toggle("open", !next);
+    localStorage.setItem(PROJECTS_COLLAPSE_KEY, next ? "1" : "0");
+  });
+}
+
 async function init() {
   initTheme();
   initAuth();
+  setupMobileDrawer();
+  setupProjectToggle();
   document.getElementById("logoIcon").innerHTML = window.icon("logo");
   try {
     const s = await api("/api/settings");
@@ -42,3 +86,4 @@ async function init() {
   showEmpty();
 }
 init();
+//# sourceMappingURL=main.js.map

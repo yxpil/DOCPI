@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 · 页面未找到 · DocPI</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Microsoft YaHei", Roboto, Helvetica, Arial, sans-serif;
+      display: flex; align-items: center; justify-content: center;
+      background: #ffffff; color: #171717; -webkit-font-smoothing: antialiased;
+    }
+    @media (prefers-color-scheme: dark) {
+      body { background: #000000; color: #e5e5e5; }
+      .card { border-color: #262626 !important; }
+      .muted { color: #a3a3a3 !important; }
+      .ghost { border-color: #262626 !important; }
+      .ghost:hover { background: #171717 !important; }
+    }
+    .wrap { text-align: center; padding: 2rem 1.25rem; max-width: 32rem; }
+    .code {
+      font-size: clamp(5rem, 22vw, 9rem); font-weight: 800; line-height: 1;
+      letter-spacing: -0.04em;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .title { font-size: 1.25rem; font-weight: 600; margin: 1rem 0 .35rem; }
+    .muted { color: #737373; font-size: .95rem; line-height: 1.6; margin: 0 auto 1.75rem; max-width: 26rem; }
+    .card {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .5rem .75rem; border-radius: 9999px; margin-bottom: 1.75rem;
+      border: 1px solid #e5e5e5; font-size: .8rem; color: #737373;
+    }
+    .dot { width: .5rem; height: .5rem; border-radius: 9999px; background: #22c55e; }
+    .row { display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .4rem;
+      padding: .65rem 1.25rem; border-radius: 9999px; font-size: .9rem;
+      font-weight: 500; text-decoration: none; cursor: pointer; border: 0;
+      transition: background .15s, transform .1s;
+    }
+    .btn:active { transform: translateY(1px); }
+    .primary { background: #2563eb; color: #fff; }
+    .primary:hover { background: #1d4ed8; }
+    .ghost { background: transparent; color: inherit; border: 1px solid #e5e5e5; }
+    .brand { color: #2563eb; font-weight: 600; text-decoration: none; }
+    .foot { margin-top: 2.5rem; font-size: .8rem; color: #a3a3a3; }
+    @media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+  </style>
+</head>
+<body>
+  <main class="wrap" role="main">
+    <span class="card"><span class="dot"></span> DocPI · 开发文档公示</span>
+    <div class="code">404</div>
+    <h1 class="title">页面未找到</h1>
+    <p class="muted">你访问的页面不存在或已被移动。请检查链接是否正确，或返回首页继续浏览文档。</p>
+    <div class="row">
+      <a class="btn primary" href="/">返回首页</a>
+      <button class="btn ghost" onclick="history.length > 1 ? history.back() : location.href = '/'">返回上一页</button>
+    </div>
+    <p class="foot">© DocPI · <a class="brand" href="/">回到文档公示</a></p>
+  </main>
+</body>
+</html>

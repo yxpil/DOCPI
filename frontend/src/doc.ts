@@ -5,20 +5,41 @@ import { escapeHtml, promptDialog, confirmDialog, toast } from "./ui.js";
 import { canEditFolder } from "./auth.js";
 let saveTimer = null;
 let lastSavedContent = "";
+// 文档骨架占位
+function showDocSkeleton() {
+  const area = document.getElementById("contentArea");
+  area.innerHTML = `
+    <div class="max-w-4xl mx-auto fade-in">
+      <div class="sk sk-line" style="width:48%;height:26px;margin-bottom:14px;"></div>
+      <div class="flex gap-2 mb-5">
+        <div class="sk sk-line" style="width:90px;height:18px;"></div>
+        <div class="sk sk-line" style="width:110px;height:18px;"></div>
+        <div class="sk sk-line" style="width:130px;height:18px;"></div>
+      </div>
+      <div class="sk sk-block" style="width:100%;margin-bottom:10px;"></div>
+      <div class="sk sk-block" style="width:93%;margin-bottom:10px;"></div>
+      <div class="sk sk-block" style="width:96%;margin-bottom:10px;"></div>
+      <div class="sk sk-block" style="width:70%;margin-bottom:18px;"></div>
+      <div class="sk sk-block" style="width:100%;height:96px;margin-bottom:14px;border-radius:14px;"></div>
+      <div class="sk sk-block" style="width:86%;"></div>
+    </div>`;
+}
 function showEmpty() {
   const area = document.getElementById("contentArea");
   area.innerHTML = `
-    <div class="flex flex-col items-center justify-center text-neutral-400 dark:text-neutral-500 h-full min-h-[50vh]">
+    <div class="flex flex-col items-center justify-center text-neutral-400 dark:text-neutral-500 h-full min-h-[50vh] fade-in">
       <div class="text-5xl mb-3 text-neutral-300 dark:text-neutral-700">${window.icon("file").replace("w-4 h-4", "w-12 h-12")}</div>
       <p class="text-sm">选择左侧文件夹或文档开始阅读（右键文件夹可新建文档）</p>
     </div>`;
 }
 async function openDoc(id) {
+  showDocSkeleton();
   let doc;
   try {
     doc = await api(`/api/documents/${id}`);
   } catch (e) {
     toast(e.message, "error");
+    showEmpty();
     return;
   }
   state.currentDocId = id;
@@ -27,6 +48,8 @@ async function openDoc(id) {
   const { renderTree } = await import("./tree.js");
   renderTree();
   renderDoc();
+  // 移动端：打开文档后收起侧边栏，聚焦正文
+  if (window.__closeMobileDrawer) window.__closeMobileDrawer();
 }
 function renderDoc() {
   const area = document.getElementById("contentArea");
@@ -36,18 +59,18 @@ function renderDoc() {
   const updater = doc.updater_name || doc.updater_username || author;
   area.innerHTML = `
     <div class="max-w-4xl mx-auto">
-      <div class="sticky top-0 z-10 bg-white/90 dark:bg-black/90 backdrop-blur py-3 -mx-6 px-6 border-b border-neutral-200 dark:border-neutral-800 flex items-center gap-2">
+      <div class="sticky top-0 z-10 bg-white/90 dark:bg-black/90 backdrop-blur py-3 -mx-4 sm:-mx-6 px-4 sm:px-6 border-b border-neutral-200 dark:border-neutral-800 flex items-center gap-2 flex-wrap">
         <button id="btnBack" class="h-8 px-3.5 rounded-full text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center gap-1">${window.icon("chevron").replace("w-4 h-4", "w-4 h-4").replace('points="9 18 15 12 9 6"', 'points="15 18 9 12 15 6"')} 返回</button>
-        <div class="flex-1"></div>
-        <div id="saveState" class="text-xs text-neutral-400 dark:text-neutral-500"></div>
+        <div class="flex-1 min-w-0"></div>
+        <div id="saveState" class="text-xs text-neutral-400 dark:text-neutral-500 truncate"></div>
         ${editable ? `
-          <button id="btnEditDoc" class="flex items-center gap-1.5 h-8 px-3.5 rounded-full text-sm font-medium text-neutral-700 dark:text-neutral-200 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition">${window.icon("edit")} 编辑</button>
-          <button id="btnUpload" class="flex items-center gap-1.5 h-8 px-3.5 rounded-full text-sm font-medium text-neutral-700 dark:text-neutral-200 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition">${window.icon("upload")} 上传</button>
-          <button id="btnDelDoc" class="flex items-center gap-1.5 h-8 px-3.5 rounded-full text-sm font-medium text-red-600 bg-white dark:bg-black border border-red-200 dark:border-red-900 hover:bg-red-50 dark:hover:bg-red-900/20 transition">${window.icon("trash")} 删除</button>
+          <button id="btnEditDoc" class="flex items-center gap-1.5 h-8 px-3 sm:px-3.5 rounded-full text-sm font-medium text-neutral-700 dark:text-neutral-200 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition">${window.icon("edit")} <span class="hidden sm:inline">编辑</span></button>
+          <button id="btnUpload" class="flex items-center gap-1.5 h-8 px-3 sm:px-3.5 rounded-full text-sm font-medium text-neutral-700 dark:text-neutral-200 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition">${window.icon("upload")} <span class="hidden sm:inline">上传</span></button>
+          <button id="btnDelDoc" class="flex items-center gap-1.5 h-8 px-3 sm:px-3.5 rounded-full text-sm font-medium text-red-600 bg-white dark:bg-black border border-red-200 dark:border-red-900 hover:bg-red-50 dark:hover:bg-red-900/20 transition">${window.icon("trash")} <span class="hidden sm:inline">删除</span></button>
         ` : ""}
       </div>
 
-      <article class="py-6">
+      <article class="py-6 fade-in">
         <h1 id="docTitle" class="text-2xl font-bold mb-2">${escapeHtml(doc.title)}</h1>
         <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-neutral-400 dark:text-neutral-500 mb-5 pb-4 border-b border-neutral-100 dark:border-neutral-800">
           <span class="flex items-center gap-1">${window.icon("user")} 作者：${escapeHtml(author)}</span>
@@ -65,6 +88,8 @@ function renderDoc() {
     const { openFolder } = window.__tree || {};
     if (openFolder && state.currentFolderId) openFolder(state.currentFolderId);
     else showEmpty();
+    // 移动端：返回列表时重新展开侧边栏以便继续选择文档
+    if (window.__openMobileDrawer) window.__openMobileDrawer();
   });
   if (editable) {
     document.getElementById("btnEditDoc").addEventListener("click", () => editDoc(true));
@@ -166,7 +191,7 @@ function editDoc() {
   const area = document.getElementById("contentArea");
   area.innerHTML = `
     <div class="max-w-4xl mx-auto">
-      <div class="sticky top-0 z-10 bg-white/90 dark:bg-black/90 backdrop-blur py-3 -mx-6 px-6 border-b border-neutral-200 dark:border-neutral-800 flex items-center gap-2">
+      <div class="sticky top-0 z-10 bg-white/90 dark:bg-black/90 backdrop-blur py-3 -mx-4 sm:-mx-6 px-4 sm:px-6 border-b border-neutral-200 dark:border-neutral-800 flex items-center gap-2">
         <div class="flex-1"></div>
         <div id="saveState" class="text-xs text-neutral-400 dark:text-neutral-500">编辑中…</div>
         <button id="btnSaveNow" class="flex items-center gap-1.5 h-8 px-3.5 rounded-full text-sm font-medium text-white bg-brand-600 hover:bg-brand-700 transition">${window.icon("save")} 保存</button>

@@ -4,6 +4,45 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* ===== 加载动画 ===== */
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 旋转 spinner */
+.docpi-spin {
+  width: 28px; height: 28px;
+  border: 3px solid rgba(0,0,0,.12);
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+.dark .docpi-spin { border-color: rgba(255,255,255,.14); border-top-color: #60a5fa; }
+.docpi-spin-sm { width: 16px; height: 16px; border-width: 2px; }
+
+/* 骨架屏 shimmer */
+.sk {
+  background: linear-gradient(90deg, rgba(0,0,0,.06) 25%, rgba(0,0,0,.11) 37%, rgba(0,0,0,.06) 63%);
+  background-size: 200% 100%;
+  animation: shimmer 1.3s ease-in-out infinite;
+  border-radius: 8px;
+}
+.dark .sk {
+  background: linear-gradient(90deg, rgba(255,255,255,.06) 25%, rgba(255,255,255,.11) 37%, rgba(255,255,255,.06) 63%);
+  background-size: 200% 100%;
+}
+.sk-line { height: 12px; border-radius: 9999px; }
+.sk-block { height: 14px; }
+
+/* 内容淡入 */
+.fade-in { animation: fadeIn .25s ease; }
+
 /* 细滚动条 */
 .scroll-thin::-webkit-scrollbar { width: 8px; height: 8px; }
 .scroll-thin::-webkit-scrollbar-thumb { background: rgba(0,0,0,.18); border-radius: 4px; }
@@ -22,6 +61,37 @@ mark { background: #fde68a; color: inherit; border-radius: 3px; padding: 0 2px; 
 /* 树子节点缩进过渡 */
 .tree-chevron { transition: transform .15s; }
 .tree-chevron.open { transform: rotate(90deg); }
+
+/* 项目管理折叠 */
+#projectListWrap { transition: max-height .2s ease, opacity .15s ease, padding .2s ease; }
+#projectListWrap.collapsed { max-height: 0 !important; opacity: 0; padding-top: 0; padding-bottom: 0; overflow: hidden; }
+
+/* 移动端：侧边栏抽屉 */
+@media (max-width: 767px) {
+  #sidebar {
+    position: fixed;
+    top: 3.5rem;
+    left: 0;
+    bottom: 0;
+    width: 84vw;
+    max-width: 320px;
+    transform: translateX(-100%);
+    transition: transform .25s ease;
+    box-shadow: none;
+    will-change: transform;
+  }
+  #sidebar.drawer-open {
+    transform: translateX(0);
+    box-shadow: 0 12px 40px rgba(0,0,0,.22);
+  }
+  #drawerOverlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+@media (min-width: 768px) {
+  #drawerOverlay { display: none !important; }
+}
 
 /* Markdown 正文（纯黑纯白主题） */
 .md-body { font-size: 15px; line-height: 1.75; color: #171717; }
