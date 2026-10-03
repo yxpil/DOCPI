@@ -1,5 +1,13 @@
 # DOCPI 测试说明
 
+- 测试完成：是（2026-10-04）
+- 测试日期：2026-10-04
+- 测试内容：单元：escapeHtml XSS 转义、canEditFolder 文件夹权限判定；注入：<script>/onerror 事件属性载荷
+- 运行命令：cd frontend && npm test
+- 测试框架：Vitest + jsdom
+- 模型：豆包（Doubao）生成
+
+
 DOCPI = Rust 服务端（`server/`）+ TypeScript 前端（`frontend/`）。本次在 **frontend** 补 Vitest 单测。
 
 ## 运行方式
