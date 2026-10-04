@@ -142,3 +142,15 @@ node scripts/test.js
 | GET/POST | `/api/folders/{id}/documents` | 文档列表 / 新建 |
 | GET/PUT/DELETE | `/api/documents/{id}` | 读取 / 更新 / 删除文档 |
 | GET | `/api/search?q=` | 全文搜索 |
+
+---
+
+<div align="center">
+
+<a href="https://github.com/yxpil/DOCPI">
+  <img width="100%" src="https://alittlecatgirlpanel.yxp.hk/card?repo=yxpil/DOCPI" alt="gh-card · yxpil/DOCPI" />
+</a>
+
+<sub>Powered by <a href="https://alittlecatgirlpanel.yxp.hk"><b>gh-card</b></a> · 粉色手写体 README 仓库名片</sub>
+
+</div>
